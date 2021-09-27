@@ -11,6 +11,12 @@
 - Phonon Wavelet transform for the coherence time and lifetime calculation.
 - Thermal conductivity calculation including wavelike and particlelike phonons.
 
+## The code should have interface to:
+
+- LAMMPS
+- GPUMD
+- VASP & CP2K & DFTB
+
 # The code is upcoming soon!
 
 Before that please refers to our publications or preprint about the used theories.
