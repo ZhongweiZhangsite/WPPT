@@ -1,0 +1,4 @@
+export FFLAGS=
+export LDFLAGS=$$/fftw/lib/libfftw3.a
+export INFLAGS=-I $$/fftw/include/
+export MPIFC=mpiifort
