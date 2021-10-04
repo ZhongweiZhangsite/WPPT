@@ -1,0 +1,17 @@
+General{               ! For general control
+Ntotal= 2000           ! Number of step
+Delta_time= 0.001      ! Unit:ps Timestep for the recorded atomic velocity 
+}
+NMA{									 ! For the module of normal mode anlysis (NMA)
+Natom= 2000            ! Number of atoms in the whole system
+Ncell=  2							 ! Number of atoms in a primitive cell
+Dimension= 3						! dimension
+nKpoints= 100						! Number of Kpoints
+Kpoints= Ture						 ! To read the Kpoints mesh from Kpoints.dat file. Only support Ture now.
+EigenV= Ture						 ! To read Eigenvector at different kpoints and branch from Eigenvector. Only support .T. now.
+Periodicity= Ture				 ! To read atomic periodicity from periodicity.dat. Only support Ture now.
+NMA_time= Ture				 ! To calculate and write the time dependent normal mode velocity. Only support Ture now.
+NMA_omega= Ture         ! To calculate and write the normal mode velocity after FFTW. Support both Ture and Flase.
+SED= Ture							 ! To calculate and write the spectral energy density (SED). Support both Ture and Flase.
+DOS= Ture  						 ! To calculate and write the density of states (DOS). Support both Ture and Flase.
+}
