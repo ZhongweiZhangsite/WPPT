@@ -1,0 +1,50 @@
+processors 				* * 1
+
+units           	metal
+atom_style      	atomic
+dimension       	3
+boundary        	p p p
+
+neighbor        	4.0 bin
+neigh_modify    	once yes
+
+#  read from data
+
+read_data 	       data_prinstine.lmp
+
+# Force field
+
+pair_style	   tersoff
+
+pair_coeff	 *  * CBN_modify.tersoff C
+
+# Settings
+
+timestep			1e-3	        # unit: ps
+
+# Define variable
+
+velocity         all create 300 1 rot yes dist gaussian
+
+thermo	 2000
+thermo_style custom step temp etotal pe vol press
+
+# Apply NVT ensemble
+
+fix              1     all      langevin 300 300 10 1
+fix              2     all      nve
+run   	        100000
+unfix     1
+
+run     100000
+
+#run 1
+
+dump               1  all custom 15 vx.bin vx
+dump_modify        1  sort id
+dump               2  all custom 15 vy.bin vy
+dump_modify        2  sort id
+dump               3  all custom 15 vz.bin vz
+dump_modify        3  sort id
+
+run	  100000
