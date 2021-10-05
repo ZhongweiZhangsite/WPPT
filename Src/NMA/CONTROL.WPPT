@@ -1,0 +1,18 @@
+General{              
+Ntotal= 2000          
+Delta_time= 0.001 
+}
+NMA{								
+Natom= 3264
+Ncell=  2
+Dimension= 3
+nKpoints= 50
+Kpoints= Ture
+EigenV= Ture
+Periodicity= Ture
+NMA_time= Ture
+NMA_omega= Ture
+SED= Ture
+DOS= Ture
+Nsample= 20
+}
