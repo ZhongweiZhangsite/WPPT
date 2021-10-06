@@ -5,11 +5,11 @@
 - Zhongwei Zhang <zhongweizhang123@gmail.com> / <zhongwei@tongji.edu.cn>      
 - Sebastian Volz   <volz@iis.u-tokyo.ac.jp>
 
-## The code contans three parts:
+## The code contans three modules:
 
-- Time dependent normal mode velocity or displacment calculation.
-- Phonon Wavelet transform for the coherence time and lifetime calculation.
-- Thermal conductivity calculation including wavelike and particlelike phonons.
+- NMA: Time dependent normal mode velocity or displacment calculation.
+- PWave: Phonon Wavelet transform for the coherence time, lifetime and spatial coherence length calculation. (in preparing)
+- WPpt: Thermal conductivity calculation including wavelike and particlelike phonons. (in preparing)
 
 ## The code should have interface to:
 
@@ -19,9 +19,10 @@
 
 ## Manual:
 
-- Please refers to the the online manual (preparing) :
-
-# The code is upcoming soon!
+- Please refers to the the online manual (in preparing): 
+  https://zhongweizhang123.wixsite.com/wppt
+  
+# The whole code is upcoming soon!
 
 Before that please refers to our publications or preprint about the used theories.
 
