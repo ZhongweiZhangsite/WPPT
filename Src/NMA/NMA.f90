@@ -464,7 +464,9 @@ if(my_id==root_proc) then
 
             enddo
         enddo
+        do i_step=1, n_omega
         write(2,'(2E20.10)') omega(i_step),DOS(i_step)
+        enddo
         close(2)
         deallocate(DOS)
         deallocate(omega)
