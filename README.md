@@ -17,6 +17,10 @@
 - GPUMD
 - VASP & CP2K & DFTB
 
+## Manual:
+
+- Please refers to the the online manual (preparing) :
+
 # The code is upcoming soon!
 
 Before that please refers to our publications or preprint about the used theories.
