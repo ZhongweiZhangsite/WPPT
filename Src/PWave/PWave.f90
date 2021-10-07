@@ -14,10 +14,10 @@ include 'fftw3.f'
 
 integer i,id,ii,jj,m,xx,num,Ln,num_time,width_number,f(1)
 integer Min_time,Max_time,Step_time,displace,Step_displace
-integer wvector,branch
+integer wvector,branch,sc_factor2
 double precision,allocatable:: time_number_node(:),time_id(:)
 double precision pos(2),omega_target,wavelet_results1,width,dt
-double precision tau_up,sc_factor1,sc_factor2,Size_WP
+double precision tau_up,sc_factor1,Size_WP
 double precision Min_width,Max_width,Step_width,Min_displace,Max_displace,real_time,process,wavelet_results2
 double complex::  temp1,temp2
 double precision,allocatable::time(:),width_coh(:),coherence_dist(:,:),coherence_dist0(:,:),wavelet_results_node(:,:),coh_density(:)
@@ -453,7 +453,7 @@ write(*,'(A43)',advance='no') '1. coherence_time.dat,  2. coh_density.dat'
 n=2
 if(Spectral_cw=='T') then
 n=n+1
-write(*,'(I2,A11)',advance='no') n,'. Spectral_evo.dat'
+write(*,'(I2,A19)',advance='no') n,'. Spectral_evo.dat'
 n=n+1
 write(*,'(I2,A11)',advance='no') n,'. w_t_coh.dat'
 endif
