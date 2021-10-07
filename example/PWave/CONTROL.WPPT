@@ -1,0 +1,27 @@
+General{              
+Ntotal= 2000          
+Delta_time= 0.001 
+}
+NMA{								
+Natom= 3264
+Ncell=  2
+Dimension= 3
+nKpoints= 50
+Kpoints= Ture
+EigenV= Ture
+Periodicity= Ture
+NMA_time= Ture
+NMA_omega= Ture
+SED= Ture
+DOS= Ture
+Nsample= 20
+}
+Pwave{								
+Ndisplace= 5
+Omegafile= Flase
+tau_c_up= 0.1
+sc_factor1= 0.1
+sc_factor2= 100.0
+Size_WP= 2.0
+Spec_range= Ture
+}
