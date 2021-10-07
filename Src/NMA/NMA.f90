@@ -1,3 +1,10 @@
+!GNU GENERAL PUBLIC LICENSE
+!                      Version 3, 29 June 2007
+
+!Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+!Everyone is permitted to copy and distribute verbatim copies
+!of this license document, but changing it is not allowed.
+
 !-----to calculate and write the modal velocity from a parallel running code
 
 program main
@@ -99,8 +106,7 @@ do i=1,num
 end do
 close(1)
 
-cell_position(:,5)=cell_position(:,5)*(mass/ev2J)*(Atom/pstos)**2
-cell_position(:,5)=cell_position(:,5)/2.0*dt        !coefficient in 1/2mv^2 and fdt in fourier
+cell_position(:,5)=cell_position(:,5)*sqrt((mass/2)*(Atom/pstos))
 
 !---------------------------read eigenvector----------------------
 
@@ -152,13 +158,13 @@ close(1)
 
 if (my_id==root_proc) then
   
-    write(*,*) "######## 1. Successfully read preprepared files!"
+    write(*,*) "######## 1. Successfully read pre-prepared files!"
     write(*,*) "------------------------------------------------------------"
     write(*,*) ' '
-    write(*,*) 'The atoms in MD:',num,'; primitive cell:',num_cell
-    write(*,*) 'The nstep,timestep:',Ln,',',dt,'ps'
-    write(*,*) 'The supercell number:',int(maxval(cell_position(:,1))),int(maxval(cell_position(:,2))),int(maxval(cell_position(:,3)))
-    write(*,*) 'The wavevector:',n_k,', The branch:',n_f
+    write(*,*) 'The atoms in MD:',num,'; primitive cell:',num_cell,'.'
+    write(*,*) 'The nstep,timestep:',Ln,',',dt,'ps.'
+    write(*,'(A22,3I5,A3)') 'The supercell number:',int(maxval(cell_position(:,1))),int(maxval(cell_position(:,2))),int(maxval(cell_position(:,3))),'.'
+    write(*,*) 'Wavevector number:',n_k,'; branch number:',n_f,'.'
     write(*,*) ' '
     write(*,*) "-----------------------------------------------------------"
 
@@ -354,6 +360,7 @@ do i=1,sendcount(my_id+1)
 
     write(1,*) 't-Modal velocity.'
     write(1,*) 'wavevector:',m,'Branch:',n
+    write(1,*) 't_evo     real    imag'
     do i_step=1, Ln
         write(1,*) float(i_step)*dt,real(q(i_step)),imag(q(i_step))
     enddo
@@ -380,6 +387,7 @@ do i=1,sendcount(my_id+1)
 
             write(1,*) 'SED for each mode can used for lifetime calculation'
             write(1,*) 'wavevector:',m,'Branch:',n
+            write(1,*) 'omega     SED'
             do i_step=1, n_omega
                 write(1,*) 1.0/dt/float(n_interval)*float(i_step),sed_omega(i_step)
             enddo
@@ -416,7 +424,7 @@ if(my_id==root_proc) then
         open(2,file='SED_k_w.dat')
         allocate(sed(n_omega))
         allocate(omega(n_omega))
-
+        write(2,*) 'kx    ky    kz    omega    SED'
         do i=1,n_k
             sed=0.0
             do j=1,n_f
@@ -426,6 +434,7 @@ if(my_id==root_proc) then
                 open(1,file = trim(file_name))
                 read(1,*)
                 read(1,*)
+                read(1,*)
                 do i_step=1, n_omega
                     read(1,*) omega(i_step),sed_omega(i_step)
                 enddo
@@ -433,7 +442,6 @@ if(my_id==root_proc) then
                 sed=sed+sed_omega
 
             enddo
-            
             write(2,'(5E20.10)') wavevector(:,i),omega(i_step),sed(i_step)
         enddo
         close(2)
@@ -442,9 +450,7 @@ if(my_id==root_proc) then
     endif
 
     if(DOS_cw=='Ture') then
-
-        open(2,file='DOS_w.dat')
-
+ 
         allocate(DOS(n_omega))
         allocate(omega(n_omega))
         DOS=0.0
@@ -456,6 +462,7 @@ if(my_id==root_proc) then
                 open(1,file = trim(file_name))
                 read(1,*)
                 read(1,*)
+                read(1,*)
                 do i_step=1, n_omega
                     read(1,*) omega(i_step),sed_omega(i_step)
                 enddo
@@ -464,12 +471,16 @@ if(my_id==root_proc) then
 
             enddo
         enddo
+
+        open(2,file='DOS_w.dat')
+        write(2,*) 'omega    DOS'
         do i_step=1, n_omega
         write(2,'(2E20.10)') omega(i_step),DOS(i_step)
         enddo
         close(2)
         deallocate(DOS)
         deallocate(omega)
+
     endif
 
 !------------------------------------------------------------------------
@@ -505,8 +516,5 @@ write(*,*) 'The used times:',time1-time0,'seconds.'
 endif
 
 call MPI_FINALIZE(ierr)
-
-
-
-
+ 
 end program
