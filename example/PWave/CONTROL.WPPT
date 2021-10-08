@@ -7,13 +7,13 @@ Natom= 3264
 Ncell=  2
 Dimension= 3
 nKpoints= 50
-Kpoints= Ture
-EigenV= Ture
-Periodicity= Ture
-NMA_time= Ture
-NMA_omega= Ture
-SED= Ture
-DOS= Ture
+Kpoints= True
+EigenV= True
+Periodicity= True
+NMA_time= True
+NMA_omega= True
+SED= True
+DOS= True
 Nsample= 20
 }
 Pwave{								
@@ -23,5 +23,5 @@ tau_c_up= 0.1
 sc_factor1= 0.1
 sc_factor2= 100.0
 Size_WP= 2.0
-Spec_range= Ture
+Spec_range= True
 }
