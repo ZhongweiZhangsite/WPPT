@@ -8,7 +8,7 @@
 ## The code contans three modules:
 
 - NMA: Time dependent normal mode velocity or displacement calculation.
-- PWave: Phonon Wavelet transform for the coherence time, lifetime and spatial coherence length calculation. (in preparing)
+- PWave: Phonon Wavelet transform for the coherence time, lifetime and spatial coherence length calculation.
 - WPpt: Thermal conductivity calculation including wavelike and particlelike phonons. (in preparing)
 
 ## The code should have interface to:
