@@ -22,7 +22,7 @@
 - Please refers to the the online manual (in preparing): 
   https://zhongweizhang123.wixsite.com/wppt
   
-# We will gradually improve the code and prepare more examples for friendly use!
+## We will gradually improve the code and prepare more examples for friendly use!
 
 Before that please refers to our publications or preprint about the used theories.
 
