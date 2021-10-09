@@ -7,14 +7,24 @@
 
 !-----to calculate and write the phonon coherence from a parallel running code
 
+include 'mkl_vsl.f90'
+include 'mkl_dfti.f90'
+
 program main
 
 use mpi
-include 'fftw3.f'
+USE MKL_VSL_TYPE
+USE MKL_VSL
+use MKL_DFTI, forget => DFTI_DOUBLE, DFTI_DOUBLE => DFTI_DOUBLE_R
+
+TYPE(VSL_CORR_TASK) task
+INTEGER(KIND=4) status
+INTEGER mode,rank
 
 integer i,id,ii,jj,m,xx,num,Ln,num_time,width_number,f(1)
 integer Min_time,Max_time,Step_time,displace,Step_displace
 integer wvector,branch,sc_factor2
+integer nsample,i_sample,n1,n2,n_interval
 double precision,allocatable:: time_number_node(:),time_id(:)
 double precision pos(2),omega_target,wavelet_results1,width,dt
 double precision tau_up,sc_factor1,Size_WP
@@ -22,6 +32,7 @@ double precision Min_width,Max_width,Step_width,Min_displace,Max_displace,real_t
 double complex::  temp1,temp2
 double precision,allocatable::time(:),width_coh(:),coherence_dist(:,:),coherence_dist0(:,:),wavelet_results_node(:,:),coh_density(:)
 double precision,allocatable:: omega_range(:),coh_spectral(:,:),w_t_coh(:,:,:),omega0(:)
+double precision,allocatable:: ph0(:),correlation0(:),correlation1(:),correlation2(:)
 double complex,allocatable::modal_velocity(:),q0(:),wavelet_results(:),motherwavelet(:)
 integer :: plan
 real, parameter :: pi=3.1415926,mass=1.993e-26,Atom=1.0e-10,pstos=1.0e-12,hbar=6.62607015e-22
@@ -32,13 +43,16 @@ integer  fh,nbins,nlest,recvcount
 integer,allocatable:: sendcount(:),displs(:)
 character*16 infile1,infile2,infile3
 character char0
-character Omega_cw,Spectral_cw
+character Omega_cw,Spectral_cw,decay_cw,each_cw
 character(len=10) :: file_id
 character(len=50) :: file_name
 integer :: tx
 character( Len = 85 ) :: cStr
 integer ierr,my_id,num_procs,root_proc,filetype
 
+type(DFTI_DESCRIPTOR), POINTER :: hand
+hand => null()
+mode=VSL_CORR_MODE_AUTO
 !----------------------------------------------------------------
 
 call CPU_TIME(time0)
@@ -86,6 +100,9 @@ read(1,*) char0,sc_factor1
 read(1,*) char0,sc_factor2
 read(1,*) char0,Size_WP
 read(1,*) char0,Spectral_cw
+read(1,*) char0,decay_cw
+read(1,*) char0,nsample
+read(1,*) char0,each_cw
 close(1)
 
 !-----------------------------------Initialization-----------------------------------------
@@ -158,6 +175,7 @@ if (my_id==root_proc) then
 endif
 
 if (my_id==root_proc) then
+
     write(*,*) '######## 2. Determining the frequency...'
     write(*,*) '------------------------------------------------------------'
     write(*,*) ' '
@@ -166,6 +184,7 @@ if (my_id==root_proc) then
     else
         write(*,*) 'The frequency is deterimed by FFTW.'
     endif
+
 endif
 
 !-------------------------------------frequency----------------------------------
@@ -185,10 +204,12 @@ if(Omega_cw=='T') then
 else
 
     allocate(q0(Ln))
-    q0=cmplx(0.0d0,0.0d0)
-    call dfftw_plan_dft_1d(plan,Ln,modal_velocity,q0,FFTW_FORWARD,FFTW_ESTIMATE)
-    call dfftw_execute_dft(plan,modal_velocity,q0)
-    call dfftw_destroy_plan(plan)
+    q0=modal_velocity
+
+    status = DftiCreateDescriptor(hand,DFTI_DOUBLE, DFTI_COMPLEX,1,Ln)
+    status = DftiCommitDescriptor(hand)
+    status = DftiComputeForward(hand,q0)
+    ignored_status = DftiFreeDescriptor(hand)
 
     q0(:int(Ln/2))=real(q0(:int(Ln/2)))**2+imag(q0(:int(Ln/2)))**2
     f(1)=maxloc(real(q0(:int(Ln/2))),1)
@@ -236,10 +257,17 @@ if (my_id==root_proc) then
     write(*,'(A36,I9,A2)') ' The time evolution steps in Wavelet:',num_time,'.'
     write(*,'(A26,I9,A2)') 'The coherence time steps:',width_number,'.'
     if(Spectral_cw=='F') then
-        write(*,'(A40)') ' The calculation of spec_coh_t_N: Flase.'
+        write(*,'(A40)') ' The calculation of spec_coh_t_N: False.'
     else
-    write(*,*) 'The calculation of spec_coh_t_N: Ture.'
+    write(*,*) 'The calculation of spec_coh_t_N: True.'
     endif
+
+    if(decay_cw=='F') then
+        write(*,'(A40)') ' The calculation of Phonon decay: False.'
+    else
+    write(*,*) 'The calculation of Phonon decay: True.'
+    endif
+
     write(*,*) ' '
     write(*,*) '------------------------------------------------------------'
     write(*,*) "######## 4. The calculation is begin.."
@@ -275,7 +303,7 @@ if(Spectral_cw=='F') then
     do i=1,sendcount(my_id+1)
         
         if(my_id==root_proc) then
-            write(*,'(A20,2I7)') 'In calculating step',i,sendcount(my_id+1)
+            write(*,'(A21,2I7)') ' In calculating step',i,sendcount(my_id+1)
         endif
 
         !write(*,*) '--------',0.0,'%  ----------'
@@ -389,7 +417,7 @@ else
 endif
 
 if(my_id==root_proc) then
-
+  
     width_coh=width_coh*(2.0*sqrt(2*log(2.0)))
     coherence_dist=coherence_dist/hbar/omega_target
 
@@ -439,37 +467,145 @@ if(my_id==root_proc) then
             write(1,*)
         enddo
         close(1)
+        deallocate(coh_spectral)
+        deallocate(w_t_coh)
 
     endif
 
 !------------------------------------------------------------------------
 write(*,*) ' '
-write(*,*) "PWave calculation is successfully done!"
+write(*,*) "Coherence calculation is successfully done!"
 write(*,*) '------------------------------------------------------------'
 write(*,*) "######## 5. The output files:"
 write(*,*) '------------------------------------------------------------'
 write(*,*) ' '
-write(*,'(A43)',advance='no') '1. coherence_time.dat,  2. coh_density.dat'
+write(*,'(A43)',advance='no') '1. coherence_time.dat, 2. coh_density.dat'
 n=2
 if(Spectral_cw=='T') then
-n=n+1
-write(*,'(I2,A19)',advance='no') n,'. Spectral_evo.dat'
-n=n+1
-write(*,'(I2,A11)',advance='no') n,'. w_t_coh.dat'
+    n=n+1
+    write(*,'(I2,A18)',advance='no') n,'. Spectral_evo.dat'
+    n=n+1
+    write(*,'(I2,A12)',advance='no') n,'. w_t_coh.dat'
 endif
-
 write(*,*) '.'
-write(*,*) ' '
-write(*,*) '------------------------------------------------------------'
-write(*,*) "Thank you for your using!"
-write(*,*) ' '
+!----------------------------------------------------------------------
 
-call CPU_TIME(time1)
-write(*,*) 'The used times:',time1-time0,'seconds.'
+if(decay_cw=='T') then
 
+    write(*,*) ' '
+    write(*,*) '------------------------------------------------------------'
+    write(*,*) "######## 6. The calculation of phonon decay is begin.."
+    write(*,*) '------------------------------------------------------------'
+    write(*,*) 'mpirun calculating...'
+    write(*,*) '------------------------------------------------------------'
+    write(*,*) ' '
+
+    n_interval=int(Ln/5.0)
+
+    allocate(ph0(n_interval))
+    allocate(correlation0(n_interval))
+    allocate(correlation1(n_interval))
+    allocate(correlation2(n_interval))
+
+    correlation2=0.0d0
+
+    if(each_cw=='T') then
+
+        write(file_id, '(i0,A1,i0)') wvector,'_',branch
+        file_name = 'Decay_coh_' // trim(adjustl(file_id)) // '.dat'
+        open(1,file = trim(file_name))
+
+        write(1,*) 'Phonon decay'
+        write(1,*) 'wavevector:',wvector,'Branch:',branch
+        write(1,*) 't_evo     decay'
+
+    endif
+
+    do j=1,width_number
+
+        write(*,'(A29,2I7)') 'In calculating correlation',j,width_number
+
+        correlation1=0.0d0
+        do i_sample=1,n_sample
+
+            n1=(i_sample-1)*int((Ln-n_interval)/(n_sample-1))+1
+            n2=(i_sample-1)*int((Ln-n_interval)/(n_sample-1))+n_interval
+
+            ph0(:)=coherence_dist(j,n1:n2);ph0(:)=ph0(:)-sum(ph0(:))/float(n_interval)
+
+            status =  vsldcorrnewtask1d(task, mode,n_interval,n_interval,n_interval)
+            status =  vsldcorrexec1d(task,ph0,1,ph0,1,correlation0,1)
+            status =  vslcorrdeletetask(task)
+        
+            do i_step=1, n_interval
+                correlation1(i_step)=correlation1(i_step)+correlation0(n_interval-i_step+1)/(n_interval-i_step+1)
+            enddo
+
+        enddo
+
+        correlation1=correlation1/float(n_sample)
+        correlation1=correlation1/correlation1(1)
+     
+        if(each_cw=='T') then
+
+            write(1,*) width_coh(j)
+            do i_step=1, n_interval
+                write(1,*) time(int(time_id(i_step))),correlation1(i_step)
+            enddo
+            write(1,*)
+        
+        endif
+
+        correlation2=correlation2+correlation1*width_coh(j)
+
+    enddo
+
+    if(each_cw=='T') then
+        close(1)
+    endif
+
+    correlation2=correlation2/correlation2(1)
+        
+        write(file_id, '(i0,A1,i0)') wvector,'_',branch
+        file_name = 'Decay_' // trim(adjustl(file_id)) // '.dat'
+        open(1,file = trim(file_name))
+
+        write(1,*) 'Coherence corrected phonon decay for each mode'
+        write(1,*) 'wavevector:',m,'Branch:',n
+        write(1,*) 't_evo     decay'
+        do i_step=1, n_interval
+            write(1,*) time(int(time_id(i_step))),correlation2(i_step)
+        enddo
+        close(1)
+
+
+    write(*,*) ' '
+    write(*,*) "Decay calculation is successfully done!"
+    write(*,*) '------------------------------------------------------------'
+    write(*,*) "######## 7. The other output files:"
+    write(*,*) '------------------------------------------------------------'
+    write(*,*) ' '
+
+    n=n+1
+    write(*,'(I2,A16)',advance='no') n,'. Decay_*_*.dat'
+    if(each_cw=='T') then
+        n=n+1
+        write(*,'(I2,A19)',advance='no') n,'. Decay_coh_*_*.dat'
+    endif
+    write(*,*) '.'
+    write(*,*) ' '
+
+ endif
+ 
+    write(*,*) '------------------------------------------------------------'
+    write(*,*) "Thank you for your using!"
+    write(*,*) ' '
+
+    call CPU_TIME(time1)
+    write(*,*) 'The used times:',time1-time0,'seconds.'
 
 endif
-
+ 
 call MPI_FINALIZE(ierr)
 
 end program
