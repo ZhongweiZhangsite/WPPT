@@ -366,7 +366,7 @@ do i=1,sendcount(my_id+1)
     enddo
   	close(1)
     
-    if(NMAw_cw=='Ture') then
+    if(NMAw_cw=='True') then
 
         do i_sample=1,n_sample
 
@@ -419,7 +419,7 @@ endif
 
 if(my_id==root_proc) then
 
-    if(SED_cw=='Ture') then
+    if(SED_cw=='True') then
 
         open(2,file='SED_k_w.dat')
         allocate(sed(n_omega))
@@ -449,7 +449,7 @@ if(my_id==root_proc) then
         deallocate(omega)
     endif
 
-    if(DOS_cw=='Ture') then
+    if(DOS_cw=='True') then
  
         allocate(DOS(n_omega))
         allocate(omega(n_omega))
@@ -492,15 +492,15 @@ write(*,*) '------------------------------------------------------------'
 write(*,*) ' '
 write(*,'(A17)',advance='no') '1. NMAt_*_*.dat'
 n=1
-if(NMAw_cw=='Ture') then
+if(NMAw_cw=='True') then
 n=n+1
 write(*,'(I2,A14)',advance='no') n,'. NMAw_*_*.dat'
 endif
-if(SED_cw=='Ture') then
+if(SED_cw=='True') then
 n=n+1
 write(*,'(I2,A13)',advance='no') n,'. SED_k_w.dat'
 endif
-if(DOS_cw=='Ture') then
+if(DOS_cw=='True') then
 n=n+1
 write(*,'(I2,A11)',advance='no') n,'. DOS_w.dat'
 endif
