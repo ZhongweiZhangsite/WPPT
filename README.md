@@ -2,7 +2,7 @@
 
 ## Authors:
 
-- Zhongwei Zhang <zhongweizhang123@gmail.com> / <zhongwei@tongji.edu.cn>      
+- Zhongwei Zhang <zhongweizhang123@gmail.com> / <zhongwei@tongji.edu.cn>,       
 - Sebastian Volz   <volz@iis.u-tokyo.ac.jp>
 
 ## The code contans three modules:
