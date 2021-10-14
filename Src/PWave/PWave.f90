@@ -447,7 +447,7 @@ if(my_id==root_proc) then
 
     if(Spectral_cw=='T') then
 
-        open(1,file='Spectral_evo.dat')
+        !open(1,file='Spectral_evo.dat')
         write(1,*) 'omega   t_evo   Ph_number'
         do i=1,nomega
             do j=1,num_time
@@ -456,7 +456,7 @@ if(my_id==root_proc) then
         enddo
         close(1)
      
-        open(1,file='w_t_coh.dat')
+        !open(1,file='w_t_coh.dat')
         write(1,*) 'omega   t_evo   tau_c   Ph_number'
         do iw=1,nomega
             do i=1,num_time
@@ -511,9 +511,9 @@ if(decay_cw=='T') then
 
     if(each_cw=='T') then
 
-        write(file_id, '(i0,A1,i0)') wvector,'_',branch
-        file_name = 'Decay_coh_' // trim(adjustl(file_id)) // '.dat'
-        open(1,file = trim(file_name))
+        !write(file_id, '(i0,A1,i0)') wvector,'_',branch
+        !file_name = 'Decay_coh_' // trim(adjustl(file_id)) // '.dat'
+        !open(1,file = trim(file_name))
 
         write(1,*) 'Phonon decay'
         write(1,*) 'wavevector:',wvector,'Branch:',branch
@@ -566,9 +566,9 @@ if(decay_cw=='T') then
 
     correlation2=correlation2/correlation2(1)
         
-        write(file_id, '(i0,A1,i0)') wvector,'_',branch
-        file_name = 'Decay_' // trim(adjustl(file_id)) // '.dat'
-        open(1,file = trim(file_name))
+        !write(file_id, '(i0,A1,i0)') wvector,'_',branch
+       ! file_name = 'Decay_' // trim(adjustl(file_id)) // '.dat'
+       ! open(1,file = trim(file_name))
 
         write(1,*) 'Coherence corrected phonon decay for each mode'
         write(1,*) 'wavevector:',m,'Branch:',n
