@@ -21,14 +21,14 @@
 
 ## Manual:
 
-- Please refers to the the online manual (in preparing): 
-  https://zhongweizhang123.wixsite.com/wppt
+- Please refers to the the [online manual](https://zhongweizhang123.wixsite.com/wppt) (in preparing).
   
-## We will gradually improve the code and prepare more examples for friendly use!
+## We are gradually improving the code and creating more examples for friendly use!
 
 Before that please refers to our publications or preprint about the used theories.
 
-- [1] Z. Zhang, Y. Guo, M. Bescond, J. Chen, M. Nomura, and S. Volz, Generalized Decay Law for Particlelike and Wavelike Thermal Phonons, Phys. Rev. B 103, 184307 (2021).
+- [1] Z. Zhang, Y. Guo, M. Bescond, J. Chen, M. Nomura, and S. Volz, Generalized Decay Law for Particlelike and Wavelike Thermal Phonons, Phys. Rev. B 103, 184307 (2021). [Download](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.103.184307).
+- [2] Z. Zhang, Y. Guo, M. Bescond, J. Chen, M. Nomura, and S. Volz, Heat conduction theory including phonon coherence. arXiv Prepr. arXiv2110.09750 (2021). [Download](https://arxiv.org/abs/2110.09750).
 
 ## Acknowledgement:
 
