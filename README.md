@@ -35,4 +35,4 @@ Before that please refers to our publications or preprint about the used theorie
 
 - This work is partially supported by CREST JST (Grant Nos. JPMJCR19I1 and JPMJCR19Q3).
 - This project is also supported in part by the National Natural Science Foundation of China (Grant Nos. 12075168 and 11890703), and Science and Technology Commission of Shanghai Municipality (Grant No.19ZR1478600).
-- Zhongwei Zhang also thanks to the supports from China Scholarship Council (20018-2020).
+- Zhongwei Zhang also thanks for the support from China Scholarship Council (20018-2020).
