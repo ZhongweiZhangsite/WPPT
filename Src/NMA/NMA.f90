@@ -25,11 +25,12 @@ integer	status(MPI_STATUS_SIZE)
 integer(kind=MPI_OFFSET_KIND)	offset
 integer  fh
 integer,allocatable:: sendcount(:),displs(:)
+integer*4 :: ijk
 character*16 infile1,infile2,infile3
 character(len=10) :: file_id
 character(len=50) :: file_name
 character char0
-character*4 NMAw_cw,SED_cw,DOS_cw         ! The control characters to calculate (c) and write (w) properties
+character NMAw_cw,SED_cw,DOS_cw         ! The control characters to calculate (c) and write (w) properties
 
 integer ierr,my_id,num_procs,root_proc,filetype
 integer :: plan
@@ -62,6 +63,8 @@ if(my_id==root_proc)then
     write(*,*) '---------------Email: zhongwei@tongji.edu.cn----------------'
     write(*,*) '---------------------Date: Oct. 1 2021----------------------'
     write(*,*) '------------------------------------------------------------'
+    
+    ijk=system("mkdir NMAt")
 
 endif
 !-----------------------all nodes setting------------------------
@@ -167,6 +170,10 @@ if (my_id==root_proc) then
     write(*,*) 'Wavevector number:',n_k,'; branch number:',n_f,'.'
     write(*,*) ' '
     write(*,*) "-----------------------------------------------------------"
+	
+    if(NMAw_cw=='T') then
+	ijk=system("mkdir NMAw")
+    endif
 
 endif
 
@@ -355,7 +362,7 @@ do i=1,sendcount(my_id+1)
     q=q/sqrt(float(num))
     
     write(file_id, '(i0,A1,i0)') m,'_',n
-    file_name = 'NMAt_' // trim(adjustl(file_id)) // '.dat'
+    file_name = 'NMAt/NMAt_' // trim(adjustl(file_id)) // '.dat'
     open(1,file = trim(file_name))
 
     write(1,*) 't-Modal velocity.'
@@ -366,7 +373,7 @@ do i=1,sendcount(my_id+1)
     enddo
   	close(1)
     
-    if(NMAw_cw=='True') then
+    if(NMAw_cw=='T') then
 
         do i_sample=1,n_sample
 
@@ -382,7 +389,7 @@ do i=1,sendcount(my_id+1)
             
             sed_omega=real(q1(1:n_omega))**2/float(n_interval)+imag(q1(1:n_omega))**2/float(n_interval)
             
-            file_name = 'NMAw_' // trim(adjustl(file_id)) // '.dat'
+            file_name = 'NMAw/NMAw_' // trim(adjustl(file_id)) // '.dat'
             open(1,file = trim(file_name))
 
             write(1,*) 'SED for each mode can used for lifetime calculation'
@@ -419,7 +426,7 @@ endif
 
 if(my_id==root_proc) then
 
-    if(SED_cw=='True') then
+    if(SED_cw=='T') then
 
         open(2,file='SED_k_w.dat')
         allocate(sed(n_omega))
@@ -430,7 +437,7 @@ if(my_id==root_proc) then
             do j=1,n_f
 
                 write(file_id, '(i0,A1,i0)') i,'_',j
-                file_name = 'NMAw_' // trim(adjustl(file_id)) // '.dat'
+                file_name = 'NMAw/NMAw_' // trim(adjustl(file_id)) // '.dat'
                 open(1,file = trim(file_name))
                 read(1,*)
                 read(1,*)
@@ -442,14 +449,18 @@ if(my_id==root_proc) then
                 sed=sed+sed_omega
 
             enddo
-            write(2,'(5E20.10)') wavevector(:,i),omega(i_step),sed(i_step)
+
+		do i_step=1, n_omega
+			write(2,'(5E20.10)') wavevector(:,i),omega(i_step),sed(i_step)
+		enddo
+
         enddo
         close(2)
         deallocate(sed)
         deallocate(omega)
     endif
 
-    if(DOS_cw=='True') then
+    if(DOS_cw=='T') then
  
         allocate(DOS(n_omega))
         allocate(omega(n_omega))
@@ -458,7 +469,7 @@ if(my_id==root_proc) then
             do j=1,n_f
 
                 write(file_id, '(i0,A1,i0)') i,'_',j
-                file_name = 'NMAw_' // trim(adjustl(file_id)) // '.dat'
+                file_name = 'NMAw/NMAw_' // trim(adjustl(file_id)) // '.dat'
                 open(1,file = trim(file_name))
                 read(1,*)
                 read(1,*)
@@ -492,15 +503,15 @@ write(*,*) '------------------------------------------------------------'
 write(*,*) ' '
 write(*,'(A17)',advance='no') '1. NMAt_*_*.dat'
 n=1
-if(NMAw_cw=='True') then
+if(NMAw_cw=='T') then
 n=n+1
 write(*,'(I2,A14)',advance='no') n,'. NMAw_*_*.dat'
 endif
-if(SED_cw=='True') then
+if(SED_cw=='T') then
 n=n+1
 write(*,'(I2,A13)',advance='no') n,'. SED_k_w.dat'
 endif
-if(DOS_cw=='True') then
+if(DOS_cw=='T') then
 n=n+1
 write(*,'(I2,A11)',advance='no') n,'. DOS_w.dat'
 endif
