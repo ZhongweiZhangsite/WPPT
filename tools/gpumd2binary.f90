@@ -11,7 +11,7 @@ Open(3, file='vy.bin',access='direct',form='unformatted',recl=2)
 Open(4, file='vz.bin',access='direct',form='unformatted',recl=2)
 
 ii=0
-do while(.ture.)		
+do while(.true.)		
  
 	read(1,*,iostat=ierr) recording(:)
 	
@@ -25,7 +25,7 @@ enddo
 close(1)
 close(2)
 close(3)
-
+close(4)
 
 end program
 
