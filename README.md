@@ -1,6 +1,6 @@
 # 'WPPT': A solver for Wave- and Particle-like Phonon Transport (WPPT)
 
-## Note that we have only uploaded a draft of softeware to this page. The well designed code will be available soon.
+## Note that we have only uploaded a draft of softeware to this page. The well designed sourcecode will be available soon.
 ## For any request, please contact the authors.
 
 ## Authors:
