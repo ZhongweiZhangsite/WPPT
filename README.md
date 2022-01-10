@@ -1,5 +1,8 @@
 # 'WPPT': A solver for Wave- and Particle-like Phonon Transport (WPPT)
 
+## Note that we have only uploaded a draft of softeware to this page. The well designed code will be available soon.
+## For any request, please contact the authors.
+
 ## Authors:
 
 - Zhongwei Zhang <zhongweizhang123@gmail.com> / <zhongwei@tongji.edu.cn>, Institute of Industrial Science, The University of Tokyo
@@ -7,13 +10,13 @@
 - Jie Chen <jie@tongji.edu.cn>, Tongji University
 - Masahiro Nomura <nomura@iis.u-tokyo.ac.jp>, Institute of Industrial Science, The University of Tokyo
 
-## The code contains three modules:
+## The code contains three modules: (in preparing)
 
 - NMA: Time-dependent normal mode velocity or displacement calculation.
 - PWave: Phonon Wavelet transform for the coherence time distribution, coherence length distribution and phonon decay calculation. (upcoming soon for the coherence length calculation part)
 - WPpt: 1) particlelike lifetimes, coherence corrected lifetimes and coherence time; 2) thermal conductivity calculation including wavelike and particlelike phonons; 3) coherence from spectroscopy. (upcoming soon)
 
-## The code should have interface to:
+## The code should have interface to: (in preparing)
 
 - LAMMPS
 - GPUMD
@@ -21,7 +24,7 @@
 
 ## Manual:
 
-- Please refers to the the [online manual](https://zhongweizhang123.wixsite.com/wppt) (in preparing).
+- Please refers to the the [online manual](https://zhongweizhang123.wixsite.com/wppt).
   
 ## We are gradually improving the code and creating more examples for friendly use!
 
