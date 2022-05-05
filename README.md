@@ -31,8 +31,8 @@
 Before that please refers to our publications or preprint about the used theories.
 
 - [1] Z. Zhang, Y. Guo, M. Bescond, J. Chen, M. Nomura, and S. Volz, Generalized Decay Law for Particlelike and Wavelike Thermal Phonons, Phys. Rev. B 103, 184307 (2021). [Download](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.103.184307).
-- [2] Z. Zhang, Y. Guo, M. Bescond, J. Chen, M. Nomura, and S. Volz, Heat conduction theory including phonon coherence. arXiv Prepr. arXiv2110.09750 (2021). [Download](https://arxiv.org/abs/2110.09750).
-- [3] Z. Zhang, Y. Guo, M. Bescond, J. Chen, M. Nomura, and S. Volz, Strong phase correlation between diffusons governs heat conduction in amorphous silicon. arXiv Prepr. arXiv2110.10487 (2021). [Download](https://arxiv.org/abs/2110.10487).
+- [2] Z. Zhang, Y. Guo, M. Bescond, J. Chen, M. Nomura, and S. Volz, Heat conduction theory including phonon coherence, Phys. Rev. Lett. 128, 015901 (2022). [Download](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.128.015901).
+- [3] Z. Zhang, Y. Guo, M. Bescond, J. Chen, M. Nomura, and S. Volz, How coherence is governing diffuson heat transfer in amorphous solids, npj Comput. Mater. 8, 96 (2022). [Download](https://doi.org/10.1038/s41524-022-00776-w).
 
 ## Acknowledgement:
 
