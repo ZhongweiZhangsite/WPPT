@@ -14,7 +14,7 @@
 
 - NMA: Time-dependent normal mode velocity or displacement calculation.
 - PWave: Phonon Wavelet transform for the coherence time distribution, coherence length distribution and phonon decay calculation. (upcoming soon for the coherence length calculation part)
-- WPpt: 1) particlelike lifetimes, coherence corrected lifetimes and coherence time; 2) thermal conductivity calculation including wavelike and particlelike phonons; 3) coherence from spectroscopy. (upcoming soon)
+- WPpt: 1) particlelike lifetimes, coherence corrected lifetimes and coherence time; 2) phonon coherence from spectroscopy or MD spectral energy; 3) thermal conductivity calculation including wavelike and particlelike phonons. 
 
 ## The code should have interface to: (in preparing)
 
