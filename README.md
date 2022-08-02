@@ -24,7 +24,7 @@
 
 ## Manual:
 
-- Please refers to the the [online manual](https://zhongweizhang123.wixsite.com/wppt).
+- Please refers to the [online manual](https://zhongweizhang123.wixsite.com/wppt).
   
 ## We are gradually improving the code and creating more examples for friendly use!
 
