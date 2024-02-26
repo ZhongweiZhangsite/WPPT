@@ -1,0 +1,39 @@
+General{              
+Ntotal= 22222
+Natom= 489600
+Ncell=  2
+nKpoints= 200
+}
+NMA{
+cal_mode= T     !S:Spatial; T:Temporal
+Delta_time= 0.0225
+NMA_omega= True
+SED= True
+DOS= True
+Nsample= 20
+}
+PWave{
+cal_mode= T     !S:Spatial; T:Temporal				
+Ndisplace= 5
+coh_up= 200.0
+coh_down= 0.1
+coh_number= 150
+Size_WP= 2.0
+Nsample= 20
+Omega_OR= True
+*CD_WC= False True
+decay_WC= True
+each_WC= True
+Dimension= 3
+}
+WPpt{				
+cal_mode= 1 
+times_mode= 3		
+Nsample= 1
+tau_p_file= tau_P-18-16-02.dat
+tau_c_file= tau_C-18-16-02.dat
+Volume= 21.0    Angstrom**3
+Temp_range= 50
+isotope= False
+Length= True 300
+}
