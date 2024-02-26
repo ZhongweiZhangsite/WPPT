@@ -1,6 +1,4 @@
 # 'WPPT': A solver for Wave- and Particle-like Phonon Transport (WPPT)
-
-## Note that we have only uploaded a draft of softeware to this page. The well designed sourcecode will be available soon.
 ## For any request, please contact the authors.
 
 ## Authors:
@@ -10,17 +8,17 @@
 - Jie Chen <jie@tongji.edu.cn>, Tongji University
 - Masahiro Nomura <nomura@iis.u-tokyo.ac.jp>, Institute of Industrial Science, The University of Tokyo
 
-## The code contains three modules: (in preparing)
+## The code contains three modules:
 
 - NMA: Time-dependent normal mode velocity or displacement calculation.
 - PWave: Phonon Wavelet transform for the coherence time distribution, coherence length distribution and phonon decay calculation. (upcoming soon for the coherence length calculation part)
 - WPpt: 1) particlelike lifetimes, coherence corrected lifetimes and coherence time; 2) phonon coherence from spectroscopy or MD spectral energy; 3) thermal conductivity calculation including wavelike and particlelike phonons. 
 
-## The code should have interface to: (in preparing)
+## The code should have interface to:
 
 - LAMMPS
 - GPUMD
-- VASP & CP2K & DFTB
+- VASP & CP2K & DFTB (in preparing)
 
 ## Manual:
 
@@ -37,6 +35,6 @@ Before that please refers to our publications or preprint about the used theorie
 
 ## Acknowledgement:
 
-- This work is partially supported by CREST JST (Grant Nos. JPMJCR19I1 and JPMJCR19Q3).
-- This project is also supported in part by the National Natural Science Foundation of China (Grant Nos. 12075168 and 11890703), and Science and Technology Commission of Shanghai Municipality (Grant No.19ZR1478600).
+- This project isis partially supported by the grants from the National Natural Science Foundation of China (Grant No. 12205220), Shanghai Pu-jiang Program (Grant No. 22PJ1413700), and the Fundamental Research Funds for the Central Universities (Grant No. 22120220556).
 - Zhongwei Zhang also thanks for the support from China Scholarship Council (20018-2020).
+- This work is partially supported by CREST JST (Grant Nos. JPMJCR19I1 and JPMJCR19Q3).
