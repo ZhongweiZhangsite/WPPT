@@ -1,0 +1,50 @@
+units             metal
+dimension         3
+newton            on
+boundary          p   p   p
+atom_style        atomic
+neighbor          3.0 nsq
+neigh_modify      delay 10 every 1 check yes
+
+read_data         data.lmp
+
+variable       T equal 300.000000
+velocity       all  create $T 1 mom yes  rot yes dist gaussian units box
+
+pair_style     tersoff
+
+pair_coeff     * *  SiGe.tersoff Si Ge
+
+thermo_style   custom step temp  etotal vol
+
+timestep       0.0005
+
+thermo 5000
+
+dump             1  all custom 50000 dump.lammpstrj x y z
+dump_modify      1  sort id
+
+fix     	 tv 		 all      langevin ${T} ${T} 1.0 1
+fix      	 tp 		 all      nph  x  0.0 0.0 0.1   y 0.0 0.0 0.1  z 0.0 0.0 0.1
+
+run     100000
+unfix   tp
+
+fix                nve  all  nve
+run     100000
+unfix tv
+
+run     100000
+
+reset_timestep   0
+
+dump             5  all custom 2000 vx.bin vx
+dump_modify      5  sort id
+
+dump             6  all custom 2000 vy.bin vy
+dump_modify      6  sort id
+
+dump             7  all custom 2000 vz.bin vz
+dump_modify      7  sort id
+ 
+run    200000

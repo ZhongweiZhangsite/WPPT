@@ -1,0 +1,26 @@
+potential  Si_Fan_2019.txt
+velocity   100
+time_step  0.5
+
+ensemble       npt_ber 100.0 100.0 100 0.0 0.0 0.0 50. 50 50 200 
+dump_thermo    1000
+dump_position  5000
+run            200000
+
+ensemble       nvt_ber 100.0 100.0 100
+dump_thermo    1000
+dump_position  5000
+run            100000
+
+ensemble       nve
+dump_thermo    1000
+dump_position  5000
+run            100000
+
+ensemble       nve
+dump_thermo    1000
+dump_position  6000
+dump_restart   100000
+
+dump_velocity  45
+run            2000000
