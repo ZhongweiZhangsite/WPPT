@@ -244,7 +244,7 @@ END IF
 open(1,file='periodicity.dat')
 read(1,*)
 num_cell1=1
-do i=1,100
+do i=1,num
 read(1,*) para,para,para,para
 if(para>num_cell1) then
 num_cell1=int(para)
@@ -720,7 +720,7 @@ END IF
 open(1,file='periodicity.dat')
 read(1,*)
 num_cell1=1
-do i=1,100
+do i=1,num
 read(1,*) para,para,para,para
 if(para>num_cell1) then
 num_cell1=int(para)
@@ -809,7 +809,7 @@ if (myid==root_proc) then
   
     write(*,*) ' '
     write(*,*) 'The atoms in MD inputs:',num,'; in primitive cell:',num_cell,'.'
-    write(*,*) 'The nstep,timestep:',Ln,',',dt,'ps.'
+    write(*,*) 'The nstep:',Ln,'.'
     write(*,'(A20,3I5,A3)') 'The supercell size:',int(maxval(cell_position(:,1))),int(maxval(cell_position(:,2))),int(maxval(cell_position(:,3))),'.'
     write(*,*) 'Wavevector number:',n_k,'; branch number:',n_f,'.'
     write(*,*) ' '
@@ -868,8 +868,8 @@ do i=1,sendcount(myid+1)
     open(1,file = trim(file_name))
 
     write(1,*) 'Spatial-time Modal velocity.'
-    write(1,'(A11,I4,A7,I5,I8)') 'wavevector:',m,'Branch:',n,num
-    write(1,*) 'ai real imag'
+    write(1,'(A11,I4,A10,I5,I8)') 'wavevector:',m,'Branch:',n,num
+    write(1,*) ' id   real   imag'
 
     do i_step=1, Ln                  ! time step
 
