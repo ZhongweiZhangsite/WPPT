@@ -3,15 +3,16 @@
 
 ## Authors:
 
-- Zhongwei Zhang <zhongweizhang123@gmail.com> / <zhongwei@tongji.edu.cn>, Institute of Industrial Science, The University of Tokyo
-- Sebastian Volz <volz@iis.u-tokyo.ac.jp>, LIMMS, CNRS-IIS UMI 2820, The University of Tokyo
+- Zhongwei Zhang <zhongweizhang123@gmail.com> / <zhongwei@tongji.edu.cn>, School of Physics Science and Engineering, Tongji University
+- Sebastian Volz <volz@iis.u-tokyo.ac.jp>, Laboratoire des Solides Irradiés, Ecole Polytechnique, UMR CNRS 7642, CEA/DRF/IRAMIS
 - Jie Chen <jie@tongji.edu.cn>, Tongji University
 - Masahiro Nomura <nomura@iis.u-tokyo.ac.jp>, Institute of Industrial Science, The University of Tokyo
+- Xiaoyu Huang <xiaoyu@my.swjtu.edu.cn>, School of Physical Science and Technology, Southwest Jiaotong University
 
 ## The code contains three modules:
 
 - NMA: Time-dependent normal mode velocity or displacement calculation.
-- PWave: Phonon Wavelet transform for the coherence time distribution, coherence length distribution and phonon decay calculation. (upcoming soon for the coherence length calculation part)
+- PWave: Phonon Wavelet transform for the coherence time distribution, coherence length distribution and phonon decay calculation. 
 - WPpt: 1) particlelike lifetimes, coherence corrected lifetimes and coherence time; 2) phonon coherence from spectroscopy or MD spectral energy; 3) thermal conductivity calculation including wavelike and particlelike phonons. 
 
 ## The code should have interface to:
